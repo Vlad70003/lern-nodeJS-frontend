@@ -1,20 +1,23 @@
-import {  Layout, Menu, Avatar, Table } from 'antd';
-import { Outlet } from "react-router-dom";
+import {Layout, Menu, Avatar, Button} from 'antd';
+import {useNavigate, Outlet} from "react-router-dom";
 import {items} from "../../utils/items-menu";
 import {useEffect} from "react";
 import {fetch} from "../../services/fetch";
 import user from "../../store/user";
 import {observer} from "mobx-react-lite";
+import {useSelectMenu} from "../../hook/useSelectMenu";
 
 const { Header, Footer } = Layout;
 
-export const Home = observer(props => {
+export const MainWrapper = observer(props => {
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch['getUser']();
-        fetch['getUsers']();
+
     }, [])
 
+    const selectMenu = useSelectMenu();
     return (
         <Layout className="layout" style={{height: '100%'}}>
             <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgb(125, 188, 234)' }}>
@@ -24,8 +27,10 @@ export const Home = observer(props => {
                 <Menu
                     theme={"light"}
                     mode="horizontal"
-                    defaultSelectedKeys={['2']}
+                    defaultSelectedKeys={[selectMenu]}
                     items={items}
+                    style={{width: '90%', background: 'rgb(125, 188, 234)'}}
+                    onClick={(e) => e.key !== 'logout' ? navigate(`/${e.key}`) : null}
                 />
             </Header>
 

@@ -1,4 +1,32 @@
 import {Space, Tag} from "antd";
+import {fetch} from "../services/fetch";
+
+export const columnsList = [
+    {
+        title: 'Название',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text) => <div>{text}</div>,
+    },
+    {
+        title: 'Описание',
+        dataIndex: 'description',
+        key: 'description',
+        render: (text) => <div>{text}</div>,
+    },
+    {
+        title: 'Действия',
+        key: 'action',
+        render: (_, record) => (
+            <Space size="middle">
+                <a onClick={() => {
+                    // console.log(record.id)
+                    fetch['deleteToList'](record.id)
+                }}>Удалить</a>
+            </Space>
+        ),
+    },
+];
 
 export const columnsHome = [
     {
@@ -13,13 +41,13 @@ export const columnsHome = [
         dataIndex: 'roles',
         render: (_, { roles }) => (
             <>
-                {roles?.map((tag) => {
+                {roles?.map((tag, index) => {
                     let color = tag === 'ADMIN' ? 'red' : 'green';
                     if (tag === 'SECRETARY') {
                         color = 'yellow';
                     }
                     return (
-                        <Tag color={color} key={tag}>
+                        <Tag color={color} key={index} >
                             {tag.toUpperCase()}
                         </Tag>
                     );
@@ -32,7 +60,9 @@ export const columnsHome = [
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <a>Delete</a>
+                <a onClick={() => {
+                    fetch['deleteUser'](record.username)
+                }}>Delete</a>
             </Space>
         ),
     },

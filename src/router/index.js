@@ -4,8 +4,9 @@ import AuthPage from "../pages/Auth";
 import {AuthFormController} from "../controllers/AuthForm/AuthForm.controller";
 import {RedirectHome} from "../hoc/RedirectHome";
 import {RequireAuth} from "../hoc/RequireAuth";
-import Home from "../pages/Home";
+import MainWrapper from "../pages/MainWrapper";
 import HomeController from "../controllers/HomeController";
+import {ListController} from "../controllers/ListController/ListController";
 
 export const router = createBrowserRouter([
     {
@@ -25,11 +26,21 @@ export const router = createBrowserRouter([
     },
     {
         path: "/home",
-        element: <RequireAuth><Home/></RequireAuth>,
+        element: <RequireAuth><MainWrapper/></RequireAuth>,
         children: [
             {
                 path: '',
                 element: <HomeController></HomeController>
+            }
+        ]
+    },
+    {
+        path: "/list",
+        element: <RequireAuth><MainWrapper/></RequireAuth>,
+        children: [
+            {
+                path: '',
+                element: <ListController></ListController>
             }
         ]
     }

@@ -30,6 +30,13 @@ export class UserServices {
             headers: {"Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${localStorage.getItem('token')}`},
         })
     }
+    deleteUser (username) {
+        return fetch(`http://localhost:5000/auth/deleteUser/${username}`, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${localStorage.getItem('token')}`},
+        })
+    }
+
 }
 
 export const userServices = new UserServices();
